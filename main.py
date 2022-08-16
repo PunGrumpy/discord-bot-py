@@ -5,7 +5,7 @@ import configs
 from blessed import Terminal
 from discord.ext import commands
 
-# SETUP DISCORD #
+# SETUP DISCORD
 client = discord.Client()
 
 client = commands.Bot(command_prefix="!",
