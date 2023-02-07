@@ -1,9 +1,7 @@
 FROM python:3.11
 
-COPY requirements.txt requirements.txt
+COPY . .
 
 RUN pip install -r requirements.txt && rm -rf requirements.txt
 
-COPY . .
-
-CMD ["python", "main.py"]
+RUN python main.py
