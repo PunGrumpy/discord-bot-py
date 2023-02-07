@@ -1,5 +1,3 @@
-from os import environ
-
 # SECRET
 DISCORD_TOKEN = ""
 GIPHY_API_KEY = ""
