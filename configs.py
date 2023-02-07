@@ -1,12 +1,12 @@
 from os import environ
 
 # SECRET
-DISCORD_TOKEN = environ.get("DISCORD_TOKEN")
-GIPHY_API_KEY = environ.get("GIPHY_API_KEY")
-MONGO_URL = environ.get("MONGO_URL")
-GITHUB_TOKEN = environ.get("GITHUB_TOKEN")
-WEATHER_API_KEY = environ.get("WEATHER_API_KEY")
-OWNER_ID = environ.get("OWNER_ID")
+DISCORD_TOKEN = ""
+GIPHY_API_KEY = ""
+MONGO_URL = ""
+GITHUB_TOKEN = ""
+WEATHER_API_KEY = ""
+OWNER_ID = ""
 
 # CHANNEL
 MOD_LOG_CHANNEL_NAME = "logs"
