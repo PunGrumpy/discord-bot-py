@@ -10,6 +10,7 @@ colorama
 coloredlogs
 Pillow
 psutil
-py-cord @ git+https://github.com/Pycord-Development/pycord@27e1acab1fa240a50b566f1dd00bb5c9b05ea6c4
+py-cord 
 py-cpuinfo
 spotipy
+python-dateutil
