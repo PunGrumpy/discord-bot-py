@@ -26,7 +26,7 @@ class Confirm(discord.ui.View):
         await interaction.response.send_message("Ban Confirm", ephemeral=True)
         self.value = True
         time.sleep(1)
-        await self.message.edit_original_message(view=None)
+        await self.message.edit_original_response(view=None)
         self.stop()
 
     @discord.ui.button(label="Cancel", style=discord.ButtonStyle.red)
@@ -34,7 +34,7 @@ class Confirm(discord.ui.View):
         await interaction.response.send_message("Ban Cancel", ephemeral=True)
         self.value = False
         time.sleep(1)
-        await self.message.edit_original_message(view=None)
+        await self.message.edit_original_response(view=None)
         self.stop()
     
     async def on_timeout(self):
@@ -48,7 +48,7 @@ class Confirm(discord.ui.View):
             embedTimeout.timestamp = datetime.datetime.utcnow()
             # self.button_1.disabled = True
             # self.myselect.disabled = True
-            await self.message.edit_original_message(embed=embedTimeout, view=None)
+            await self.message.edit_original_response(embed=embedTimeout, view=None)
 
 class Moderation(Cog):
     def __init__(self, bot: Bot):
@@ -134,14 +134,14 @@ class Moderation(Cog):
 
         await view.wait()
         if view.value is None:
-            await ctx.interaction.edit_original_message(embed=embedTimeout)
+            await ctx.interaction.edit_original_response(embed=embedTimeout)
             return
         elif view.value:
             await member.ban()
-            await ctx.interaction.edit_original_message(embed=embedConfirm)
+            await ctx.interaction.edit_original_response(embed=embedConfirm)
             return
         else:
-            await ctx.interaction.edit_original_message(embed=embedCancel)
+            await ctx.interaction.edit_original_response(embed=embedCancel)
             return
 
     # Kick
@@ -194,14 +194,14 @@ class Moderation(Cog):
 
         await view.wait()
         if view.value is None:
-            await ctx.interaction.edit_original_message(embed=embedTimeout)
+            await ctx.interaction.edit_original_response(embed=embedTimeout)
             return
         elif view.value:
             await member.kick()
-            await ctx.interaction.edit_original_message(embed=embedConfirm)
+            await ctx.interaction.edit_original_response(embed=embedConfirm)
             return
         else:
-            await ctx.interaction.edit_original_message(embed=embedCancel)
+            await ctx.interaction.edit_original_response(embed=embedCancel)
             return
 
 def setup(bot: Bot):

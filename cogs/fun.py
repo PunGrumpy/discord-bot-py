@@ -62,7 +62,7 @@ class Fun(Cog):
                                      color=rand)
         message = await ctx.respond(embed=random_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=embed)
+        await ctx.interaction.edit_original_response(embed=embed)
 
     # Meme
     @slash_command(
@@ -85,7 +85,7 @@ class Fun(Cog):
                                      color=rand)
         message = await ctx.respond(embed=random_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=meme)
+        await ctx.interaction.edit_original_response(embed=meme)
 
     # 8 ball
     @slash_command(
@@ -147,7 +147,7 @@ class Fun(Cog):
         embed.set_image(url=gif)
         message = await ctx.respond(embed=find_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=embed)
+        await ctx.interaction.edit_original_response(embed=embed)
 
     # Fake nitro
     @slash_command(
@@ -175,7 +175,7 @@ class Fun(Cog):
         embed_after.set_thumbnail(url="https://images-ext-2.discordapp.net/external/sVYV81qlzJcVdaE0xE7wdxeNkS2PzfKCpQvB2sqNG7k/https/i.imgur.com/w9aiD6F.png")
         message = await ctx.respond(embed=embed_before, view=button_before)
         await button_before.wait()
-        await ctx.interaction.edit_original_message(embed=embed_after, view=button_after)
+        await ctx.interaction.edit_original_response(embed=embed_after, view=button_after)
         await ctx.respond(f"<a:jokerlaugh:949318686156681267>")
 
 

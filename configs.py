@@ -1,10 +1,15 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # SECRET
-DISCORD_TOKEN = ""
-GIPHY_API_KEY = ""
-MONGO_URL = ""
-GITHUB_TOKEN = ""
-WEATHER_API_KEY = ""
-OWNER_ID = ""
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+GIPHY_API_KEY = os.getenv("GIPHY_API_KEY")
+MONGO_URL = os.getenv("MONGO_URL")
+GITHUB_TOKEN =  os.getenv("GITHUB_TOKEN")
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+OWNER_ID = os.getenv("OWNER_ID")
 
 # CHANNEL
 MOD_LOG_CHANNEL_NAME = "logs"

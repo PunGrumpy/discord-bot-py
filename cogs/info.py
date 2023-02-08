@@ -135,12 +135,12 @@ class Infomation(Cog):
         find_embed = discord.Embed(
             title=f"<a:Three_Points_Animated:944865491921547264> MEPHISTO Finding...",
             color=0xFF0000)
-        website = Button(label="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Website⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", url="https://mephisto-website-bot.web.app/", style=discord.ButtonStyle.url)
+        website = Button(label="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Website⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", url="https://mephisto-website-bot.web.app/", style=discord.ButtonStyle.url)
         view = View()
         view.add_item(website)
         view.message = await ctx.respond(embed=find_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=embed, view=view)
+        await ctx.interaction.edit_original_response(embed=embed, view=view)
 
     
     # Server info
@@ -187,7 +187,7 @@ class Infomation(Cog):
             color=ctx.guild.owner.top_role.color)
         message = await ctx.respond(embed=think_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=embed)
+        await ctx.interaction.edit_original_response(embed=embed)
       
 
 

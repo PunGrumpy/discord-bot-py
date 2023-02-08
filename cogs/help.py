@@ -155,7 +155,7 @@ class Help(Cog):
 
         message = await ctx.respond(embed=process_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=embed, view=dropdowns)
+        await ctx.interaction.edit_original_response(embed=embed, view=dropdowns)
 
     @slash_command(
         guild_ids=[
@@ -185,7 +185,7 @@ class Help(Cog):
         
         message = await ctx.respond(embed=process_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=rule_embed)
+        await ctx.interaction.edit_original_response(embed=rule_embed)
 
 def setup(bot: Bot):
     bot.add_cog(Help(bot))

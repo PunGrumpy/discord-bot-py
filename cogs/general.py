@@ -20,14 +20,14 @@ class Accpet(discord.ui.View):
     
     async def on_timeout(self):
         if self.message:
-            await self.message.edit_original_message(view=None)
+            await self.message.edit_original_response(view=None)
 
     @discord.ui.button(label="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Accept⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", style=discord.ButtonStyle.green)
     async def accpet(self, button: discord.ui.Button, interaction: discord.Interaction):
         check_embed = discord.Embed(title=f"MEPHISTO : Check Your DM Message...", color=0xff0000)
         await interaction.response.send_message(embed=check_embed, ephemeral=True)
         self.value = True
-        await self.message.edit_original_message(view=None)
+        await self.message.edit_original_response(view=None)
         time.sleep(1)
         self.stop()
 
@@ -71,7 +71,7 @@ class General(Cog):
                                    color=rand)
         message = await ctx.respond(embed=wait_embed)
         time.sleep(1)
-        await ctx.interaction.edit_original_message(embed=embed)
+        await ctx.interaction.edit_original_response(embed=embed)
 
     # Invite
     @slash_command(
@@ -146,7 +146,7 @@ class General(Cog):
                                        color=ctx.guild.me.top_role.color)
             message = await ctx.respond(embed=find_embed)
             time.sleep(1)
-            await ctx.interaction.edit_original_message(embed=embed)
+            await ctx.interaction.edit_original_response(embed=embed)
 
         else:
             embed = discord.Embed(title=f"ERROR",
@@ -164,7 +164,7 @@ class General(Cog):
                                        color=ctx.guild.me.top_role.color)
             message = await ctx.respond(embed=find_embed)
             time.sleep(1)
-            await ctx.interaction.edit_original_message(embed=embed)
+            await ctx.interaction.edit_original_response(embed=embed)
 
     # Donut ASCII
     @slash_command(
@@ -238,7 +238,7 @@ class General(Cog):
                                        color=0xF7931A)
                 message = await ctx.respond(embed=find_embed)
                 time.sleep(1)
-                await ctx.interaction.edit_original_message(embed=embed)
+                await ctx.interaction.edit_original_response(embed=embed)
 
    
 def setup(bot: Bot):
