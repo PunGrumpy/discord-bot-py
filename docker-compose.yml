@@ -1,0 +1,10 @@
+version: '3'
+services:
+  bot:
+    container_name: DiscordBot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
