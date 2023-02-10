@@ -215,7 +215,9 @@ class General(Cog):
         await ctx.respond(embed=embed)
 
     # Bitcoin price
-    @slash_command(description="Get the current price of bitcoin" )
+    @slash_command(
+        name="bitcoin",
+        description="Get the current price of bitcoin" )
     async def bitcoin(self, ctx: discord.ApplicationContext) -> None:
         async with aiohttp.ClientSession() as session:
             async with session.get("https://api.coindesk.com/v1/bpi/currentprice/BTC.json") as request:

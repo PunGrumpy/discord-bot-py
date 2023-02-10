@@ -103,8 +103,11 @@ class Infomation(Cog):
       with BytesIO() as a:
         base.save(a,"PNG")
         a.seek(0)
-        time.sleep(2)
-        await ctx.respond(file = discord.File(a, ".\\assets\\profile.png"))
+        if not os.path.exists("./assets/user"):
+            os.mkdir("./assets/user")
+        wait_embed = discord.Embed(title=f"<a:Three_Points_Animated:944865491921547264> User Information", description=f"Please wait, we are generating your profile", color=discord.Color.green())
+        await ctx.respond(embed=wait_embed, delete_after=5)
+        await ctx.send(file = discord.File(a, "user.png"))
 
     # Bot info
     @slash_command(

@@ -4,7 +4,7 @@ import configs
 import os
 
 from blessed import Terminal
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 # SETUP DISCORD
 client = discord.Client()
@@ -35,5 +35,12 @@ for extension in initial_extensions:
     except Exception as e:
         print(e)
 
+@tasks.loop(seconds=0.5)
+async def update_database_loop():
+    configs.update_database()
+    configs.BAD_WORD = [word['badword'] for word in configs.db_words.find()]
+    configs.SPAM_LINK = [link['spamlink'] for link in configs.db_links.find()]
+
+update_database_loop.start()
 token = configs.DISCORD_TOKEN
 client.run(token)

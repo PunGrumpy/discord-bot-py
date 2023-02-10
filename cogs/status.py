@@ -1,6 +1,7 @@
 import discord
 import requests
 import dateutil.parser
+import os
 from discord.ext import commands
 from PIL import Image, ImageFont, ImageDraw
 
@@ -71,10 +72,14 @@ class Spotify(Cog):
         album_image_resize = album_image.resize((140, 160))
         background_image_color.paste(album_image_resize, (0, 0), album_image_resize)
 
-        # Save image
-        background_image_color.convert('RGB').save('./spotify-image/spotify.jpg', 'JPEG')
+        # Check spotify-status folder
+        if not os.path.exists('./assets/spotify-status'):
+            os.makedirs('./assets/spotify-status')
 
-        await ctx.respond(file=discord.File('./spotify-image/spotify.jpg'))
+        # Save image
+        background_image_color.convert('RGB').save('./assets/spotify-status/spotify.jpg', 'JPEG')
+
+        await ctx.respond(file=discord.File('./assets/spotify-status/spotify.jpg'))
 
 
 def setup(bot):
