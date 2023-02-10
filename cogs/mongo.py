@@ -25,7 +25,7 @@ class Mongo(Cog):
             return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
         try:
             self.client.server_info()
-            embed = discord.Embed(title="MongoDB Status", description="The MongoDB database is online.", color=0x00ff00)
+            embed = discord.Embed(title="MongoDB Status", description=f"The MongoDB database is online. **{round(self.client.server_info()['ok'])} ms**", color=0x00ff00)
             await ctx.respond(embed=embed)
         except pymongo.errors.ServerSelectionTimeoutError:
             embed = discord.Embed(title="MongoDB Status", description="The MongoDB database is offline.", color=0xff0000)
