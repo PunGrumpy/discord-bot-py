@@ -74,7 +74,7 @@ class Spotify(Cog):
         # Save image
         background_image_color.convert('RGB').save('./spotify-image/spotify.jpg', 'JPEG')
 
-        await ctx.respond(file=discord.File('spotify.jpg'))
+        await ctx.respond(file=discord.File('./spotify-image/spotify.jpg'))
 
 
 def setup(bot):
