@@ -103,7 +103,7 @@ class Mongo(Cog):
                 return await ctx.respond("There are no bad words in the database.", ephemeral=True)
             await ctx.respond(f"`{data}`", ephemeral=True)
         elif(collection == "Spam Links"):
-            data = [link['link'] for link in configs.db_links.find()]
+            data = [link['spamlink'] for link in configs.db_links.find()]
             if(len(data) == 0):
                 return await ctx.respond("There are no spam links in the database.", ephemeral=True)
             await ctx.respond(f"`{data}`", ephemeral=True)
