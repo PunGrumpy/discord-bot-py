@@ -1,3 +1,10 @@
+# Cache
 **__pycache__**
+
+# Environmet
 .venv
 .env
+
+# Folder
+tools
+assets/**
