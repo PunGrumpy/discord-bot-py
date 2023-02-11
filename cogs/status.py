@@ -40,11 +40,11 @@ class Spotify(Cog):
         album_image = Image.open(requests.get(spotify_result.album_cover_url, stream=True).raw).convert('RGBA')
 
         # Fonts
-        title_font = ImageFont.truetype('theboldfont.ttf', 16)
-        artist_font = ImageFont.truetype('theboldfont.ttf', 14)
-        album_font = ImageFont.truetype('theboldfont.ttf', 14)
-        start_duration_font = ImageFont.truetype('theboldfont.ttf', 12)
-        end_duration_font = ImageFont.truetype('theboldfont.ttf', 12)
+        title_font = ImageFont.truetype('./assets/fonts/theboldfont.ttf', 16)
+        artist_font = ImageFont.truetype('./assets/fonts/theboldfont.ttf', 14)
+        album_font = ImageFont.truetype('./assets/fonts/theboldfont.ttf', 14)
+        start_duration_font = ImageFont.truetype('./assets/fonts/theboldfont.ttf', 12)
+        end_duration_font = ImageFont.truetype('./assets/fonts/theboldfont.ttf', 12)
 
         # Positions
         title_text_position = 150, 30
@@ -73,13 +73,13 @@ class Spotify(Cog):
         background_image_color.paste(album_image_resize, (0, 0), album_image_resize)
 
         # Check spotify-status folder
-        if not os.path.exists('./assets/spotify-status'):
-            os.makedirs('./assets/spotify-status')
+        if not os.path.exists('./assets/images/spotify-status'):
+            os.makedirs('./assets/images/spotify-status')
 
         # Save image
-        background_image_color.convert('RGB').save('./assets/spotify-status/spotify.jpg', 'JPEG')
+        background_image_color.convert('RGB').save('./assets/images/spotify-status/spotify.jpg', 'JPEG')
 
-        await ctx.respond(file=discord.File('./assets/spotify-status/spotify.jpg'))
+        await ctx.respond(file=discord.File('./assets/images/spotify-status/spotify.jpg'))
 
 
 def setup(bot):

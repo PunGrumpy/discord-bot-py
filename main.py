@@ -37,9 +37,12 @@ for extension in initial_extensions:
 
 @tasks.loop(seconds=0.5)
 async def update_database_loop():
-    configs.update_database()
-    configs.BAD_WORD = [word['badword'] for word in configs.db_words.find()]
-    configs.SPAM_LINK = [link['spamlink'] for link in configs.db_links.find()]
+    client = configs.client
+    db = client['discord']
+    db_words = db['words']
+    db_links = db['links']
+    configs.BAD_WORD = [word['badword'] for word in db_words.find()]
+    configs.SPAM_LINK = [link['spamlink'] for link in db_links.find()]
 
 update_database_loop.start()
 token = configs.DISCORD_TOKEN

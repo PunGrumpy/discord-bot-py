@@ -21,14 +21,6 @@ db_links = db["links"]
 BAD_WORD = [word['badword'] for word in db_words.find()]
 SPAM_LINK = [link['spamlink'] for link in db_links.find()]
 
-def update_database():
-    client = MongoClient(MONGO_URL)
-    db = client["automod"]
-    db_words = db["words"]
-    db_links = db["links"]
-    BAD_WORD = [word['badword'] for word in db_words.find()]
-    SPAM_LINK = [link['spamlink'] for link in db_links.find()]
-
 # CHANNEL
 MOD_LOG_CHANNEL_NAME = "logs"
 

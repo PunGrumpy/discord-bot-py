@@ -191,7 +191,7 @@ class General(Cog):
         if view.value is None:
             return
         elif view.value:
-            await ctx.author.send(file=discord.File('donut_ascii.py'))
+            await ctx.author.send(file=discord.File('./assets/donut_ascii.py'))
             return
 
     # Uptime
