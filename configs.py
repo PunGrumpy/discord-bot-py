@@ -11,6 +11,7 @@ MONGO_URL = os.getenv("MONGO_URL")
 GITHUB_TOKEN =  os.getenv("GITHUB_TOKEN")
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 OWNER_ID = os.getenv("OWNER_ID")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # MONGODB
 client = MongoClient(MONGO_URL)

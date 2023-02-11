@@ -5,12 +5,15 @@ import configs
 import random
 import json
 import time
+import openai
 
 from discord.ext.commands import Bot, Cog
 from discord.commands import (
     slash_command,
     Option
 )
+
+openai.api_key = configs.OPENAI_API_KEY
 
 class NitroAccept(discord.ui.View):
     def __init__(self):
@@ -178,6 +181,68 @@ class Fun(Cog):
         await ctx.interaction.edit_original_response(embed=embed_after, view=button_after)
         await ctx.respond(f"<a:jokerlaugh:949318686156681267>")
 
+    # Chat GPT
+    @slash_command(
+        name="chat-gpt",
+        description="Chat with GPT",
+        message=Option(
+            str,
+            "Enter the message that you want to chat with GPT",
+            required=True
+        )
+    )
+    async def chatgpt(
+        self, 
+        ctx: discord.ApplicationContext, 
+        message
+    ):
+        """Chat with GPT"""
+        rand = random.randint(0x111, 0xFF0000)
+        process_embed = discord.Embed(title=f"<a:Three_Points_Animated:944865491921547264> MEPHISTO Processing with Chat GPT...", color=rand)
+        waiting = await ctx.respond(embed=process_embed)
+
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=message,
+            temperature=0.9,
+            max_tokens=150,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0.6,
+            best_of=1,
+        )
+        embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Chat GPT", description=f"```{response['choices'][0]['text']}```", color=rand)
+        await ctx.interaction.edit_original_response(embed=embed)
+
+    # Generate Image with GPT
+    @slash_command(
+        name="image-gpt",
+        description="Generate an image with GPT",
+        message=Option(
+            str,
+            "Enter the message that you want to generate an image with GPT",
+            required=True
+        )
+    )
+    async def imagegpt(
+        self, 
+        ctx: discord.ApplicationContext, 
+        message
+    ):
+        """Generate an image with GPT"""
+        rand = random.randint(0x111, 0xFF0000)
+        process_embed = discord.Embed(title=f"<a:Three_Points_Animated:944865491921547264> MEPHISTO Processing with Draw GPT...", color=rand)
+        waiting = await ctx.respond(embed=process_embed)
+
+        response = openai.Image.create(
+            prompt=message,
+            n=1,
+            size="1024x1024"
+        )
+        image = response['data'][0]['url']
+        embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Generate Image", color=rand)
+        embed.set_image(url=image)
+        await ctx.interaction.edit_original_response(embed=embed)
 
 def setup(bot: Bot):
     bot.add_cog(Fun(bot))

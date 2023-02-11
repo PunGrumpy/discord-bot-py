@@ -16,3 +16,4 @@ spotipy
 python-dateutil
 python-dotenv
 pymongo
+openai
