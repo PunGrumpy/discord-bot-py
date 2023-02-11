@@ -138,7 +138,7 @@ class Infomation(Cog):
         find_embed = discord.Embed(
             title=f"<a:Three_Points_Animated:944865491921547264> MEPHISTO Finding...",
             color=0xFF0000)
-        website = Button(label="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Website⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", url="https://mephisto-website-bot.web.app/", style=discord.ButtonStyle.url)
+        website = Button(label="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Website⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", url="https://mephisto-website-bot.web.app/", style=discord.ButtonStyle.url)
         view = View()
         view.add_item(website)
         view.message = await ctx.respond(embed=find_embed)
