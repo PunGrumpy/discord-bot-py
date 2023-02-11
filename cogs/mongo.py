@@ -2,7 +2,6 @@ import discord
 import discord.ext
 import pymongo
 import configs
-import time
 
 from discord.ext import tasks
 from discord.ext.commands import Bot, Cog, has_permissions, is_owner
@@ -10,18 +9,19 @@ from discord.commands import (
     slash_command,
     Option
 )
-from pymongo import MongoClient
 
 class Mongo(Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # MOngoDB Status
     @slash_command(
         name="mongo-status",
         description="Check the status of the MongoDB database.",
     )
     @has_permissions(administrator=True)
     async def mongo_status(self, ctx):
+        """Check the status of the MongoDB database."""
         if(ctx.author.id != int(configs.OWNER_ID)):
             return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
         try:
@@ -32,50 +32,7 @@ class Mongo(Cog):
             embed = discord.Embed(title="MongoDB Status", description="The MongoDB database is offline.", color=0xff0000)
             await ctx.respond(embed=embed)
 
-    @slash_command(
-        name="add-badword",
-        description="Add a bad word to the database.",
-        options=[
-            Option(
-                name="badword",
-                description="The bad word to add to the database.",
-                required=True,
-                type=3
-            )
-        ]
-    )
-    @has_permissions(administrator=True)
-    @is_owner()
-    async def add_badword(self, ctx, badword):
-        if(ctx.author.id != int(configs.OWNER_ID)):
-            return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
-        if(configs.db_words.find_one({"badword": badword})):
-            return await ctx.respond(f"The bad word **{badword}** already exists in the database.", ephemeral=True)
-        configs.db_words.insert_one({"badword": badword})
-        await ctx.respond(f"The bad word **{badword}** has been added to the database.", ephemeral=True)
-
-    @slash_command(
-        name="remove-badword",
-        description="Remove a bad word from the database.",
-        options=[
-            Option(
-                name="badword",
-                description="The bad word to remove from the database.",
-                required=True,
-                type=3
-            )
-        ]
-    )
-    @has_permissions(administrator=True)
-    @is_owner()
-    async def remove_badword(self, ctx, badword):
-        if(ctx.author.id != int(configs.OWNER_ID)):
-            return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
-        if(not configs.db_words.find_one({"badword": badword})):
-            return await ctx.respond(f"The bad word **{badword}** does not exist in the database.", ephemeral=True)
-        configs.db_words.delete_one({"badword": badword})
-        await ctx.respond(f"The bad word **{badword}** has been removed from the database.", ephemeral=True)
-
+    # MonoDB View
     @slash_command(
         name="mongo-view",
         description="View all bad words or all spam links in the database.",
@@ -95,6 +52,7 @@ class Mongo(Cog):
     @has_permissions(administrator=True)
     @is_owner()
     async def mongo_view(self, ctx, collection):
+        """View all bad words or all spam links in the database."""
         if(ctx.author.id != int(configs.OWNER_ID)):
             return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
         if(collection == "Bad Words"):
@@ -109,6 +67,112 @@ class Mongo(Cog):
             await ctx.respond(f"`{data}`", ephemeral=True)
         else:
             await ctx.respond("Invalid collection or Something went wrong...", ephemeral=True)
+
+    @slash_command(
+        name="mongo-add",
+        description="Add a bad word or a spam link to the database.",
+        options=[
+            Option(
+                name="collection",
+                description="The type of data to add.",
+                required=True,
+                type=3,
+                choices=[
+                    "Bad Words",
+                    "Spam Links"
+                ]
+            ),
+            Option(
+                name="data",
+                description="The data to add.",
+                required=True,
+                type=3
+            )
+        ]
+    )
+    @has_permissions(administrator=True)
+    @is_owner()
+    async def mongo_add(self, ctx, collection, data):
+        """Add a bad word or a spam link to the database."""
+        if(ctx.author.id != int(configs.OWNER_ID)):
+            return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
+        if(collection == "Bad Words"):
+            if(configs.db_words.find_one({"badword": data})):
+                return await ctx.respond("This bad word already exists in the database.", ephemeral=True)
+            configs.db_words.insert_one({"badword": data})
+            await ctx.respond(f"Successfully added `{data}` to the database.", ephemeral=True)
+        elif(collection == "Spam Links"):
+            if(configs.db_links.find_one({"spamlink": data})):
+                return await ctx.respond("This spam link already exists in the database.", ephemeral=True)
+            configs.db_links.insert_one({"spamlink": data})
+            await ctx.respond(f"Successfully added `{data}` to the database.", ephemeral=True)
+        else:
+            await ctx.respond("Invalid collection or Something went wrong...", ephemeral=True)
+
+    # MongoDB Remove
+    @slash_command(
+        name="mongo-remove",
+        description="Remove a bad word or a spam link from the database.",
+        options=[
+            Option(
+                name="collection",
+                description="The type of data to remove.",
+                required=True,
+                type=3,
+                choices=[
+                    "Bad Words",
+                    "Spam Links"
+                ]
+            ),
+            Option(
+                name="data",
+                description="The data to remove.",
+                required=True,
+                type=3
+            )
+        ]
+    )
+    @has_permissions(administrator=True)
+    @is_owner()
+    async def mongo_remove(self, ctx, collection, data):
+        """Remove a bad word or a spam link from the database."""
+        if(ctx.author.id != int(configs.OWNER_ID)):
+            return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
+        if(collection == "Bad Words"):
+            if(not configs.db_words.find_one({"badword": data})):
+                return await ctx.respond("This bad word does not exist in the database.", ephemeral=True)
+            configs.db_words.delete_one({"badword": data})
+            await ctx.respond(f"Successfully removed `{data}` from the database.", ephemeral=True)
+        elif(collection == "Spam Links"):
+            if(not configs.db_links.find_one({"spamlink": data})):
+                return await ctx.respond("This spam link does not exist in the database.", ephemeral=True)
+            configs.db_links.delete_one({"spamlink": data})
+            await ctx.respond(f"Successfully removed `{data}` from the database.", ephemeral=True)
+        else:
+            await ctx.respond("Invalid collection or Something went wrong...", ephemeral=True)
+
+    # MongoDB History
+    # @slash_command(
+    #     name="mongo-history",
+    #     description="View the history of a user.",
+    #     options=[
+    #         Option(
+    #             name="user",
+    #             description="The user to view the history of.",
+    #             required=True,
+    #             type=6
+    #         )
+    #     ]
+    # )
+    # @has_permissions(administrator=True)
+    # @is_owner()
+    # async def mongo_history(self, ctx, user: discord.User):
+    #     if(ctx.author.id != int(configs.OWNER_ID)):
+    #         return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
+    #     data = [history['history'] for history in configs.db_history.find({"user_id": user.id})]
+    #     if(len(data) == 0):
+    #         return await ctx.respond("This user has no history in the database.", ephemeral=True)
+    #     await ctx.respond(f"`{data}`", ephemeral=True)
 
 def setup(bot):
     bot.add_cog(Mongo(bot))
