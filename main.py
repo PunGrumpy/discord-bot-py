@@ -17,7 +17,6 @@ t = Terminal()
 
 # Cogs
 initial_extensions = [
-    'cogs.ready', 
     'cogs.moderation', 
     'cogs.auto_moderation',
     'cogs.fun', 
@@ -44,6 +43,21 @@ async def update_database_loop():
     configs.BAD_WORD = [word['badword'] for word in db_words.find()]
     configs.SPAM_LINK = [link['spamlink'] for link in db_links.find()]
 
-update_database_loop.start()
+@client.event
+async def on_ready():
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="𝐇 𝐄 𝐋 𝐋"))
+    print()
+    print(t.green(f'Successfully logged in.'))
+    print(t.black(f'—————————————————————————————————'))
+    print(t.white(f'Username : ') + t.red(f"{client.user.name}"))
+    print(t.white(f'ID : ') + t.red(f"{client.user.id}"))
+    print(t.white(f'Command prefix : ') + t.red("!"))
+    print(t.white(f'Guilds count : ') + t.red(f"{len(client.guilds)}"))
+    print(t.black(f'—————————————————————————————————'))
+    print(t.grey(f'Discord Version : ') + t.white(f"{discord.__version__}"))
+
+    update_database_loop.start()
+
+
 token = configs.DISCORD_TOKEN
 client.run(token)
