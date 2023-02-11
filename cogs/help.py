@@ -98,6 +98,10 @@ class DropDownMenu(discord.ui.View):
             embed_fun.add_field(name="`/meme`", value="Get a random meme", inline=False)
             embed_fun.add_field(name="`/gif`", value="Get GIF that you want", inline=False)
             embed_fun.add_field(name="`/nitro`", value="Send a totally not a scamming nitro message that totally would not hack a Discord Account!", inline=False)
+            embed_fun.add_field(name="`/8ball [question]`", value="Ask a question to the 8ball", inline=False)
+            embed_fun.add_field(name="`/gif [query]`", value="Get a random GIF", inline=False)
+            embed_fun.add_field(name="`/chat-gpt [message]`", value="Chat with GPT", inline=False)
+            embed_fun.add_field(name="`/image-gpt [message]`", value="Generation image with GPT", inline=False)
             embed_fun.set_image(url=banner)
 
             await interaction.response.edit_message(embed=embed_fun)
