@@ -64,13 +64,16 @@ class Admin(Cog):
             embed = discord.Embed(title="Error", description="You are not the owner", color=discord.Color.red())
             await ctx.respond(embed=embed, ephemeral=True)
             return
+        stdout, stderr = await self.run_process(command)
+        text = stderr if stderr else stdout
         try:
             os.system(command)
             embed = discord.Embed(title="Success", description=f"Executed command `{command}`", color=discord.Color.green())
-            embed.add_field(name="Output", value=f"```{os.system(command)}```")
+            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
             await ctx.respond(embed=embed, ephemeral=True)
         except Exception as e:
             embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
+            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
             await ctx.respond(embed=embed, ephemeral=True)
 
     # Reload cogs
