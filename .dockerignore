@@ -4,6 +4,4 @@ __*__
 Dockerfile
 docker-compose.yml
 .env
-.git
-.gitignore
 README.md
