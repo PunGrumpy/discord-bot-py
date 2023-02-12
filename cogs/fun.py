@@ -211,7 +211,7 @@ class Fun(Cog):
             presence_penalty=0.6,
             best_of=1,
         )
-        embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Chat GPT", description=f"```{response['choices'][0]['text']}```", color=rand)
+        embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Chat GPT", description=f"{ctx.author}: {message}\n\nMephisto: {response['choices'][0]['text']}", color=rand)
         await ctx.interaction.edit_original_response(embed=embed)
 
     # Generate Image with GPT
@@ -241,6 +241,7 @@ class Fun(Cog):
         )
         image = response['data'][0]['url']
         embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Generate Image", color=rand)
+        embed.add_field(name="Message", value=message, inline=False)
         embed.set_image(url=image)
         await ctx.interaction.edit_original_response(embed=embed)
 
