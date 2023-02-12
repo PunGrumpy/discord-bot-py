@@ -76,8 +76,15 @@ class Admin(Cog):
             embed = discord.Embed(title="Error", description="You are not the owner", color=discord.Color.red())
             await ctx.respond(embed=embed, ephemeral=True)
             return
+        
+        async with ctx.typing():
+            stdout, stderr = await self.run_process(command)
+
         stdout, stderr = await self.run_process(command)
-        text = stderr if stderr else stdout
+        if stderr:
+            text = f'stdout:\n{stdout}\nstderr:\n{stderr}'
+        else:
+            text = stdout
         try:
             os.system(command)
             embed = discord.Embed(title="Success", description=f"Executed command `{command}`", color=discord.Color.green())
