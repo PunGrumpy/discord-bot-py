@@ -1,7 +1,6 @@
 import discord
 import discord.ext
 import configs
-import os
 
 from blessed import Terminal
 from discord.ext import commands, tasks
@@ -25,6 +24,7 @@ initial_extensions = [
     'cogs.info', 
     'cogs.status', 
     'cogs.mongo',
+    'cogs.admin',
 ]
 
 for extension in initial_extensions:
