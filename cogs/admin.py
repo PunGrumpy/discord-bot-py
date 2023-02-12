@@ -67,6 +67,7 @@ class Admin(Cog):
         try:
             os.system(command)
             embed = discord.Embed(title="Success", description=f"Executed command `{command}`", color=discord.Color.green())
+            embed.add_field(name="Output", value=f"```{os.system(command)}```")
             await ctx.respond(embed=embed, ephemeral=True)
         except Exception as e:
             embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
