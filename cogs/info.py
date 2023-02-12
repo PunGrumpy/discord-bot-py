@@ -81,8 +81,8 @@ class Infomation(Cog):
 
       draw = ImageDraw.Draw(base)
       pfp = circle(pfp,(215,215))
-      font = ImageFont.truetype("Nunito-Bold.ttf", 38)
-      subfont = ImageFont.truetype("Nunito-Regular.ttf", 25)
+      font = ImageFont.truetype("./assets/fonts/Nunito-Bold.ttf", 38)
+      subfont = ImageFont.truetype("./assets/fonts/Nunito-Regular.ttf", 25)
 
       draw.text((280,240), name,font = font)
 
