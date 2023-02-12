@@ -36,7 +36,7 @@ class Spotify(Cog):
             await ctx.respond(f"{user.name} is not listening to Spotify. <a:alert:944877266402435092>")
 
         # Images
-        track_background_image = Image.open('spotify_template.png')
+        track_background_image = Image.open('./assets/images/spotify-status/spotify_template.png')
         album_image = Image.open(requests.get(spotify_result.album_cover_url, stream=True).raw).convert('RGBA')
 
         # Fonts
