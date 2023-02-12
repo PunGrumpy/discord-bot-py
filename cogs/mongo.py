@@ -4,7 +4,7 @@ import pymongo
 import configs
 
 from discord.ext import tasks
-from discord.ext.commands import Bot, Cog, has_permissions, is_owner
+from discord.ext.commands import Bot, Cog, has_permissions
 from discord.commands import (
     slash_command,
     Option
@@ -14,7 +14,7 @@ class Mongo(Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # MOngoDB Status
+    # MongoDB Status
     @slash_command(
         name="mongo-status",
         description="Check the status of the MongoDB database.",
@@ -32,7 +32,7 @@ class Mongo(Cog):
             embed = discord.Embed(title="MongoDB Status", description="The MongoDB database is offline.", color=0xff0000)
             await ctx.respond(embed=embed)
 
-    # MonoDB View
+    # MongoDB View
     @slash_command(
         name="mongo-view",
         description="View all bad words or all spam links in the database.",
@@ -50,7 +50,6 @@ class Mongo(Cog):
         ]
     )
     @has_permissions(administrator=True)
-    @is_owner()
     async def mongo_view(self, ctx, collection):
         """View all bad words or all spam links in the database."""
         if(ctx.author.id != int(configs.OWNER_ID)):
@@ -91,7 +90,6 @@ class Mongo(Cog):
         ]
     )
     @has_permissions(administrator=True)
-    @is_owner()
     async def mongo_add(self, ctx, collection, data):
         """Add a bad word or a spam link to the database."""
         if(ctx.author.id != int(configs.OWNER_ID)):
@@ -133,7 +131,6 @@ class Mongo(Cog):
         ]
     )
     @has_permissions(administrator=True)
-    @is_owner()
     async def mongo_remove(self, ctx, collection, data):
         """Remove a bad word or a spam link from the database."""
         if(ctx.author.id != int(configs.OWNER_ID)):
