@@ -1,3 +1,9 @@
 **__pycache**
 .env
 __*__
+Dockerfile
+docker-compose.yml
+.env
+.git
+.gitignore
+README.md
