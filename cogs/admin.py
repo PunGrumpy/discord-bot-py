@@ -57,44 +57,6 @@ class Admin(Cog):
             embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
             await ctx.respond(embed=embed, ephemeral=True)
 
-    # Shell command execution
-    @slash_command(
-        name="shell",
-        description="Execute a shell command",
-        option=[
-            Option(
-                name="command",
-                description="The command to execute",
-                required=True,
-                type=3
-            )
-        ]
-    )
-    async def shell(self, ctx, command):
-        """Execute a shell command"""
-        if ctx.author.id != int(configs.OWNER_ID):
-            embed = discord.Embed(title="Error", description="You are not the owner", color=discord.Color.red())
-            await ctx.respond(embed=embed, ephemeral=True)
-            return
-        
-        async with ctx.typing():
-            stdout, stderr = await self.run_process(command)
-
-        stdout, stderr = await self.run_process(command)
-        if stderr:
-            text = f'stdout:\n{stdout}\nstderr:\n{stderr}'
-        else:
-            text = stdout
-        try:
-            os.system(command)
-            embed = discord.Embed(title="Success", description=f"Executed command `{command}`", color=discord.Color.green())
-            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
-            await ctx.respond(embed=embed, ephemeral=True)
-        except Exception as e:
-            embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
-            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
-            await ctx.respond(embed=embed, ephemeral=True)
-
     # Reload cogs
     @slash_command(
         name="reload-cogs",
@@ -185,6 +147,44 @@ class Admin(Cog):
         except Exception as e:
             embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
             await ctx.respond(embed=embed, ephemeral=True)                    
+
+    # Shell command execution
+    @slash_command(
+        name="shell",
+        description="Execute a shell command",
+        option=[
+            Option(
+                name="command",
+                description="The command to execute",
+                required=True,
+                type=3
+            )
+        ]
+    )
+    async def shell(self, ctx, command):
+        """Execute a shell command"""
+        if ctx.author.id != int(configs.OWNER_ID):
+            embed = discord.Embed(title="Error", description="You are not the owner", color=discord.Color.red())
+            await ctx.respond(embed=embed, ephemeral=True)
+            return
+        
+        async with ctx.typing():
+            stdout, stderr = await self.run_process(command)
+
+        stdout, stderr = await self.run_process(command)
+        if stderr:
+            text = f'stdout:\n{stdout}\nstderr:\n{stderr}'
+        else:
+            text = stdout
+        try:
+            os.system(command)
+            embed = discord.Embed(title="Success", description=f"Executed command `{command}`", color=discord.Color.green())
+            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
+            await ctx.respond(embed=embed, ephemeral=True)
+        except Exception as e:
+            embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
+            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
+            await ctx.respond(embed=embed, ephemeral=True)
 
 def setup(bot: Bot):
     bot.add_cog(Admin(bot))
