@@ -2,6 +2,8 @@ import discord
 import discord.ext
 import os
 import configs
+import asyncio
+import subprocess
 
 from discord.ext.commands import Bot, Cog
 from discord.commands import (
@@ -25,6 +27,16 @@ cogs = [
 class Admin(Cog):
     def __init__(self, bot: Bot):
         self.bot = bot
+
+    async def run_process(self, command: str) -> list[str]:
+        try:
+            process = await asyncio.create_subprocess_shell(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            result = await process.communicate()
+        except NotImplementedError:
+            process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            result = await self.bot.loop.run_in_executor(None, process.communicate)
+
+        return [output.decode() for output in result]
 
     # Github pull
     @slash_command(
