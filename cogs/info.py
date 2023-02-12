@@ -71,7 +71,7 @@ class Infomation(Cog):
       delta_created = f"{(today - created_at).days} days"
       delta_joined = f"{(today - joined_at).days} days"
 
-      base = Image.open("base.png").convert("RGBA")
+      base = Image.open("./assets/images/user/base.png").convert("RGBA")
 
       pfp = user.avatar.with_format('png').with_size(256)
       data = BytesIO(await pfp.read())
@@ -138,7 +138,7 @@ class Infomation(Cog):
         find_embed = discord.Embed(
             title=f"<a:Three_Points_Animated:944865491921547264> MEPHISTO Finding...",
             color=0xFF0000)
-        website = Button(label="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Website⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", url="https://mephisto-website-bot.web.app/", style=discord.ButtonStyle.url)
+        website = Button(label="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Website⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀", url="https://mephisto-website-bot.web.app/", style=discord.ButtonStyle.url)
         view = View()
         view.add_item(website)
         view.message = await ctx.respond(embed=find_embed)
