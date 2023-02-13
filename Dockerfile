@@ -9,7 +9,4 @@ COPY . .
 RUN pip install -r requirements.txt && \
     rm -rf /root/.cache/pip
 
-RUN apt-get update && \
-    apt-get install -y git
-
 CMD ["python", "main.py"]
