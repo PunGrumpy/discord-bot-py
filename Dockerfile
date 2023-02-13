@@ -1,4 +1,4 @@
-FROM python:3.12 AS runner
+FROM python:3.11 AS runner
 LABEL AUTHOR="PunGrumpy"
 LABEL MAINTAINER="PunGrumpy: Discord bot with pycord"
 
