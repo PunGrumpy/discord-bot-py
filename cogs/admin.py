@@ -173,18 +173,16 @@ class Admin(Cog):
 
         stdout, stderr = await self.run_process(command)
         if stderr:
+            title = "Error"
             text = f'stdout:\n{stdout}\nstderr:\n{stderr}'
+            color = discord.Color.red()
         else:
+            title = "Success"
             text = stdout
-        try:
-            os.system(command)
-            embed = discord.Embed(title="Success", description=f"Executed command `{command}`", color=discord.Color.green())
-            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
-            await ctx.respond(embed=embed, ephemeral=True)
-        except Exception as e:
-            embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
-            embed.add_field(name="Stdout", value=f"```{text}```", inline=False)
-            await ctx.respond(embed=embed, ephemeral=True)
+            color = discord.Color.green()
+        embed = discord.Embed(title=title, description=f"Executed command `{command}`", color=color)
+        embed.add_field(name="Stdout", value=f"```{text}```", inline=False)                    
+        await ctx.respond(embed=embed, ephemeral=True)
 
 def setup(bot: Bot):
     bot.add_cog(Admin(bot))
