@@ -1,4 +1,4 @@
-FROM python:3.12.0a5-slim-bullseye
+FROM python:3.12.0a5-slim
 LABEL AUTHOR="PunGrumpy"
 LABEL MAINTAINER="PunGrumpy: Discord bot with pycord"
 
