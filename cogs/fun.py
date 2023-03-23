@@ -278,5 +278,37 @@ class Fun(Cog):
         embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Movie to Emoji", description=f"**{ctx.author}:** \n```text\n{message}```\n\n**Mephisto:** ```text\n{response['choices'][0]['text']}```", color=rand)
         await ctx.interaction.edit_original_response(embed=embed)
 
+    # Grammar correction with GPT
+    @slash_command(
+        name="grammar-correction",
+        description="Check an grammar correction with GPT",
+        message=Option(
+            str,
+            "Enter the message that you want to check an grammar correction with GPT",
+            required=True
+        )
+        async def grammarcorrection(
+            self,
+            ctx: discord.ApplicationContext,
+            message
+        ):
+            """Check an grammar correction with GPT"""
+            rand = random.randint(0x111, 0xFF0000)
+            process_embed = discord.Embed(title=f"<a:Three_Points_Animated:944865491921547264> MEPHISTO Processing with Grammar Correction GPT...", color=rand)
+            waiting = await ctx.respond(embed=process_embed)
+
+            response = openai.Completion.create(
+                model="text-davinci-003",
+                prompt="Correct this to standard English:\n\n" + message,
+                temperature=0.0,
+                max_tokens=60,
+                top_p=1.0,
+                frequency_penalty=0.0,
+                presence_penalty=0.0
+            )
+            embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Grammar Correction", description=f"**{ctx.author}:** \n```text\n{message}```\n\n**Mephisto:** ```text\n{response['choices'][0]['text']}```", color=rand)
+            await ctx.interaction.edit_original_response(embed=embed)
+    )
+
 def setup(bot: Bot):
     bot.add_cog(Fun(bot))
