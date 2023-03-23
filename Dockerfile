@@ -9,4 +9,6 @@ COPY . .
 RUN pip install -r requirements.txt && \
     rm -rf /root/.cache/pip
 
+RUN git config --global --add safe.directory /app/discord-bot
+
 CMD ["python", "main.py"]
