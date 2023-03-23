@@ -15,7 +15,9 @@
 Past : heroku for hosting discord bot
 if you use heroku, you must be use [Procfile](Procfile)
 
-Now : google cloud for hosting discord bot
+Past : google cloud for hosting discord bot
+
+Now : I already to use DigitalOcean Droplet for hosting discord bot
 
 ## ⚙️ Configs.py
 
