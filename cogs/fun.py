@@ -245,5 +245,38 @@ class Fun(Cog):
         embed.set_image(url=image)
         await ctx.interaction.edit_original_response(embed=embed)
 
+    # Movie to emoji with GPT
+    @slash_command(
+        name="movie-emoji",
+        description="Generate an movie to emoji with GPT",
+        message=Option(
+            str,
+            "Enter the name of movie that you want to generate an emoji with GPT",
+            required=True
+        )
+    )
+    async def movieemoji(
+        self,
+        ctx: discord.ApplicationContext,
+        message
+    ):
+        """Generate an movie to emoji with GPT"""
+        rand = random.randint(0x111, 0xFF0000)
+        process_embed = discord.Embed(title=f"<a:Three_Points_Animated:944865491921547264> MEPHISTO Processing with Moive Emoji GPT...", color=rand)
+        waiting = await ctx.respond(embed=process_embed)
+
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt="Convert movie titles into emoji.\n\n" + message + ":",
+            temperature=0.8,
+            max_tokens=60,
+            top_p=1.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.0,
+            stop=["\n"]
+        )
+        embed = discord.Embed(title=f"<a:lol_2:944951819111632947> Movie to Emoji", description=f"**{ctx.author}:** \n```text\n{message}```\n\n**Mephisto:** ```text\n{response['choices'][0]['text']}```", color=rand)
+        await ctx.interaction.edit_original_response(embed=embed)
+
 def setup(bot: Bot):
     bot.add_cog(Fun(bot))
