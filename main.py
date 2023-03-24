@@ -34,15 +34,6 @@ for extension in initial_extensions:
     except Exception as e:
         print(e)
 
-@tasks.loop(seconds=0.5)
-async def update_database_loop():
-    client = configs.client
-    db = client['discord']
-    db_words = db['words']
-    db_links = db['links']
-    configs.BAD_WORD = [word['badword'] for word in db_words.find()]
-    configs.SPAM_LINK = [link['spamlink'] for link in db_links.find()]
-
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="𝐇 𝐄 𝐋 𝐋"))
@@ -55,9 +46,7 @@ async def on_ready():
     print(t.white(f'Guilds count : ') + t.red(f"{len(client.guilds)}"))
     print(t.black(f'—————————————————————————————————'))
     print(t.grey(f'Discord Version : ') + t.white(f"{discord.__version__}"))
-
-    update_database_loop.start()
-
+    print(t.black(f'—————————————————————————————————'))
 
 token = configs.DISCORD_TOKEN
 client.run(token)

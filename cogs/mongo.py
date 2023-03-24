@@ -98,11 +98,13 @@ class Mongo(Cog):
             if(configs.db_words.find_one({"badword": data})):
                 return await ctx.respond("This bad word already exists in the database.", ephemeral=True)
             configs.db_words.insert_one({"badword": data})
+            configs.BAD_WORD = [word['badword'] for word in configs.db_words.find()]
             await ctx.respond(f"Successfully added `{data}` to the database.", ephemeral=True)
         elif(collection == "Spam Links"):
             if(configs.db_links.find_one({"spamlink": data})):
                 return await ctx.respond("This spam link already exists in the database.", ephemeral=True)
             configs.db_links.insert_one({"spamlink": data})
+            configs.SPAM_LINK = [link['spamlink'] for link in configs.db_links.find()]
             await ctx.respond(f"Successfully added `{data}` to the database.", ephemeral=True)
         else:
             await ctx.respond("Invalid collection or Something went wrong...", ephemeral=True)
@@ -139,37 +141,65 @@ class Mongo(Cog):
             if(not configs.db_words.find_one({"badword": data})):
                 return await ctx.respond("This bad word does not exist in the database.", ephemeral=True)
             configs.db_words.delete_one({"badword": data})
+            configs.BAD_WORD = [word['badword'] for word in configs.db_words.find()]
             await ctx.respond(f"Successfully removed `{data}` from the database.", ephemeral=True)
         elif(collection == "Spam Links"):
             if(not configs.db_links.find_one({"spamlink": data})):
                 return await ctx.respond("This spam link does not exist in the database.", ephemeral=True)
             configs.db_links.delete_one({"spamlink": data})
+            configs.SPAM_LINK = [link['spamlink'] for link in configs.db_links.find()]
             await ctx.respond(f"Successfully removed `{data}` from the database.", ephemeral=True)
         else:
             await ctx.respond("Invalid collection or Something went wrong...", ephemeral=True)
 
-    # MongoDB History
-    # @slash_command(
-    #     name="mongo-history",
-    #     description="View the history of a user.",
-    #     options=[
-    #         Option(
-    #             name="user",
-    #             description="The user to view the history of.",
-    #             required=True,
-    #             type=6
-    #         )
-    #     ]
-    # )
-    # @has_permissions(administrator=True)
-    # @is_owner()
-    # async def mongo_history(self, ctx, user: discord.User):
-    #     if(ctx.author.id != int(configs.OWNER_ID)):
-    #         return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
-    #     data = [history['history'] for history in configs.db_history.find({"user_id": user.id})]
-    #     if(len(data) == 0):
-    #         return await ctx.respond("This user has no history in the database.", ephemeral=True)
-    #     await ctx.respond(f"`{data}`", ephemeral=True)
+    # MongoDB Update
+    @slash_command(
+        name="mongo-update",
+        description="Update a bad word or a spam link in the database.",
+        options=[
+            Option(
+                name="collection",
+                description="The type of data to update.",
+                required=True,
+                type=3,
+                choices=[
+                    "Bad Words",
+                    "Spam Links"
+                ]
+            ),
+            Option(
+                name="old_data",
+                description="The old data to update.",
+                required=True,
+                type=3
+            ),
+            Option(
+                name="new_data",
+                description="The new data to update.",
+                required=True,
+                type=3
+            )
+        ]
+    )
+    @has_permissions(administrator=True)
+    async def mongo_update(self, ctx, collection, old_data, new_data):
+        """Update a bad word or a spam link in the database."""
+        if(ctx.author.id != int(configs.OWNER_ID)):
+            return await ctx.respond("You do not have permission to use this command.", ephemeral=True)
+        if(collection == "Bad Words"):
+            if(not configs.db_words.find_one({"badword": old_data})):
+                return await ctx.respond("This bad word does not exist in the database.", ephemeral=True)
+            configs.db_words.update_one({"badword": old_data}, {"$set": {"badword": new_data}})
+            configs.BAD_WORD = [word['badword'] for word in configs.db_words.find()]
+            await ctx.respond(f"Successfully updated `{old_data}` to `{new_data}` in the database.", ephemeral=True)
+        elif(collection == "Spam Links"):
+            if(not configs.db_links.find_one({"spamlink": old_data})):
+                return await ctx.respond("This spam link does not exist in the database.", ephemeral=True)
+            configs.db_links.update_one({"spamlink": old_data}, {"$set": {"spamlink": new_data}})
+            configs.SPAM_LINK = [link['spamlink'] for link in configs.db_links.find()]
+            await ctx.respond(f"Successfully updated `{old_data}` to `{new_data}` in the database.", ephemeral=True)
+        else:
+            await ctx.respond("Invalid collection or Something went wrong...", ephemeral=True)
 
 def setup(bot):
     bot.add_cog(Mongo(bot))
