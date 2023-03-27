@@ -38,25 +38,6 @@ class Admin(Cog):
 
         return [output.decode() for output in result]
 
-    # Github pull
-    @slash_command(
-        name="github-pull",
-        description="Pull from github"
-    )
-    async def pull(self, ctx):
-        """Pull from github"""
-        if ctx.author.id != int(configs.OWNER_ID):
-            embed = discord.Embed(title="Error", description="You are not the owner", color=discord.Color.red())
-            await ctx.respond(embed=embed, ephemeral=True)
-            return
-        try:
-            embed = discord.Embed(title="Success", description="Pulled from github", color=discord.Color.green())
-            await ctx.respond(embed=embed, ephemeral=True)
-            os.system("git pull origin main")
-        except Exception as e:
-            embed = discord.Embed(title="Error", description=f"{e}", color=discord.Color.red())
-            await ctx.respond(embed=embed, ephemeral=True)
-
     # Reload cogs
     @slash_command(
         name="reload-cogs",
