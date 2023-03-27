@@ -6,12 +6,14 @@ import asyncio
 import subprocess
 
 from discord.ext.commands import Bot, Cog
+from discord.ext import commands
 from discord.commands import (
     slash_command,
     Option
 )
 
 cogs = [file.replace(".py", "") for file in os.listdir("cogs") if file.endswith(".py")]
+cogs.append("all")
 
 class Admin(Cog):
     def __init__(self, bot: Bot):
@@ -26,6 +28,11 @@ class Admin(Cog):
             result = await self.bot.loop.run_in_executor(None, process.communicate)
 
         return [output.decode() for output in result]
+    
+    def is_owner():
+        async def predicate(ctx):
+            return ctx.author.id == int(configs.OWNER_ID)
+        return commands.check(predicate) 
 
     # Reload cogs
     @slash_command(
@@ -41,6 +48,7 @@ class Admin(Cog):
             )
         ]
     )
+    @is_owner()
     async def reload_cogs(self, ctx, cog):
         """Reload cogs or all cogs"""
         if ctx.author.id != int(configs.OWNER_ID):
@@ -76,6 +84,7 @@ class Admin(Cog):
             )
         ],
     )
+    @is_owner()
     async def load_cogs(self, ctx, cog):
         """Load cogs or all cogs"""
         if ctx.author.id != int(configs.OWNER_ID):
@@ -111,6 +120,7 @@ class Admin(Cog):
             )
         ],
     )
+    @is_owner()
     async def unload_cogs(self, ctx, cog):
         """Unload cogs or all cogs"""
         if ctx.author.id != int(configs.OWNER_ID):
@@ -145,6 +155,7 @@ class Admin(Cog):
             )
         ]
     )
+    @is_owner()
     async def shell(self, ctx, command):
         """Execute a shell command"""
         if ctx.author.id != int(configs.OWNER_ID):
@@ -168,12 +179,12 @@ class Admin(Cog):
         embed.add_field(name="Stdout", value=f"```{text}```", inline=False)                    
         await ctx.respond(embed=embed, ephemeral=True)
 
-    # Restart the bot & show command for owner only
+    # Restart the bot
     @slash_command(
         name="restart",
         description="Restart the bot"
     )
-    @commands.is_owner()
+    @is_owner()
     async def restart(self, ctx):
         """Restart the bot"""
         if ctx.author.id != int(configs.OWNER_ID):

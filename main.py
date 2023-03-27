@@ -34,9 +34,6 @@ for extension in initial_extensions:
     except Exception as e:
         print(e)
 
-async def is_owner(ctx):
-    return ctx.author.id == configs.OWNER_ID
-
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="𝐇 𝐄 𝐋 𝐋"))
