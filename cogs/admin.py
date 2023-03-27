@@ -11,19 +11,6 @@ from discord.commands import (
     Option
 )
 
-cogs = [
-    "all",
-    "admin",
-    "mongo",
-    "moderation",
-    "auto_moderation",
-    "fun",
-    "general",
-    "help",
-    "info",
-    "status"
-]
-
 class Admin(Cog):
     def __init__(self, bot: Bot):
         self.bot = bot
@@ -48,7 +35,18 @@ class Admin(Cog):
                 description="The cog to reload",
                 required=True,
                 type=3,
-                choices=cogs
+                choices=[
+                    "all",
+                    "admin",
+                    "mongo",
+                    "moderation",
+                    "auto_moderation",
+                    "fun",
+                    "general",
+                    "help",
+                    "info",
+                    "status"
+                ]
             )
         ]
     )
@@ -83,7 +81,18 @@ class Admin(Cog):
                 description="The cog to load",
                 required=True,
                 type=3,
-                choices=cogs
+                choices=[
+                    "all",
+                    "admin",
+                    "mongo",
+                    "moderation",
+                    "auto_moderation",
+                    "fun",
+                    "general",
+                    "help",
+                    "info",
+                    "status"
+                ]
             )
         ],
     )
@@ -111,7 +120,18 @@ class Admin(Cog):
                 description="The cog to unload",
                 required=True,
                 type=3,
-                choices=cogs
+                choices=[
+                    "all",
+                    "admin",
+                    "mongo",
+                    "moderation",
+                    "auto_moderation",
+                    "fun",
+                    "general",
+                    "help",
+                    "info",
+                    "status"
+                ]
             )
         ],
     )

@@ -14,7 +14,7 @@ class AutoMod(Cog):
     # Delete message auto
     @commands.Cog.listener()
     async def on_message(self, message):
-        if(message.author.id == self.bot.user.id):
+        if(message.author.id == self.bot.user.id or message.author.id == int(configs.OWNER_ID)):
             return
         badwords = configs.BAD_WORD
         spamlink = configs.SPAM_LINK
