@@ -11,6 +11,8 @@ from discord.commands import (
     Option
 )
 
+cogs = [file.replace(".py", "") for file in os.listdir("cogs") if file.endswith(".py")]
+
 class Admin(Cog):
     def __init__(self, bot: Bot):
         self.bot = bot
@@ -35,18 +37,7 @@ class Admin(Cog):
                 description="The cog to reload",
                 required=True,
                 type=3,
-                choices=[
-                    "all",
-                    "admin",
-                    "mongo",
-                    "moderation",
-                    "auto_moderation",
-                    "fun",
-                    "general",
-                    "help",
-                    "info",
-                    "status"
-                ]
+                choices=cogs
             )
         ]
     )
@@ -81,18 +72,7 @@ class Admin(Cog):
                 description="The cog to load",
                 required=True,
                 type=3,
-                choices=[
-                    "all",
-                    "admin",
-                    "mongo",
-                    "moderation",
-                    "auto_moderation",
-                    "fun",
-                    "general",
-                    "help",
-                    "info",
-                    "status"
-                ]
+                choices=cogs
             )
         ],
     )
@@ -127,18 +107,7 @@ class Admin(Cog):
                 description="The cog to unload",
                 required=True,
                 type=3,
-                choices=[
-                    "all",
-                    "admin",
-                    "mongo",
-                    "moderation",
-                    "auto_moderation",
-                    "fun",
-                    "general",
-                    "help",
-                    "info",
-                    "status"
-                ]
+                choices=cogs
             )
         ],
     )
@@ -198,6 +167,22 @@ class Admin(Cog):
         embed = discord.Embed(title=title, description=f"Executed command `{command}`", color=color)
         embed.add_field(name="Stdout", value=f"```{text}```", inline=False)                    
         await ctx.respond(embed=embed, ephemeral=True)
+
+    # Restart the bot & show command for owner only
+    @slash_command(
+        name="restart",
+        description="Restart the bot"
+    )
+    @commands.is_owner()
+    async def restart(self, ctx):
+        """Restart the bot"""
+        if ctx.author.id != int(configs.OWNER_ID):
+            embed = discord.Embed(title="Error", description="You are not the owner", color=discord.Color.red())
+            await ctx.respond(embed=embed, ephemeral=True)
+            return
+        embed = discord.Embed(title="Success", description="Restarting bot", color=discord.Color.green())
+        await ctx.respond(embed=embed, ephemeral=True)
+        await self.bot.close()
 
 def setup(bot: Bot):
     bot.add_cog(Admin(bot))
