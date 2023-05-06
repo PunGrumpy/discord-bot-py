@@ -1,7 +1,7 @@
 version: '3'
 services:
   bot:
-    container_name: Mephisto-DiscordBot
+    container_name: Mephisto-Discord
     build:
       context: .
       dockerfile: Dockerfile
